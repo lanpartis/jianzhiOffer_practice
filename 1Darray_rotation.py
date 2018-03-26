@@ -5,10 +5,27 @@
 class Solution:
     def minNumberInRotateArray(self, rotateArray):
         # write code here
-        if len(rotateArray) == 0:
+        tail = len(rotateArray)
+        if tail == 0:
             return 0
-        prev = 0
-        for i in rotateArray:
-            if i < prev:
-                return i
-            prev = i
+        head = 0
+        tail -= 1
+        mid = int((tail+head)/2)
+        while(tail!= head+1):
+            if rotateArray[mid]>rotateArray[head]:
+                head = mid
+                mid = int((tail+head)/2)
+            elif rotateArray[mid]<rotateArray[head]:
+                tail = mid
+                mid = int((tail+head)/2)
+            elif rotateArray[mid] == rotateArray[head]:
+                if rotateArray[mid] >rotateArray[tail]:
+                    head = mid
+                    mid = int((tail+head)/2)
+                else:
+                    prev = rotateArray[head]
+                    for i in range(head+1,tail):
+                        if rotateArray[i]<prev:
+                            return rotateArray[i]
+                        prev = rotateArray[i]
+        return rotateArray[tail]
